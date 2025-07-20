@@ -59,28 +59,21 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-  function playSound(e) {
+
+  window.addEventListener("keydown", function(e) {
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
-    if (!audio) return;
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`)
+    if(!audio) return;
+
+    key.classList.add("playing");
+
+    setTimeout(() => {
+      key.classList.remove("playing")
+    }, "200")
+
     audio.currentTime = 0;
     audio.play();
-
-    const key = document.querySelector(`div[data-key="${e.keyCode}"]`)
-    key.classList.add("playing");
-  }
-
-  function removeTransition(e) {
-    if(e.propertyName !== 'transform') return;
-    e.target.classList.remove("playing") // e es el evento de transicionado, como .target tiene su div respevtivo
-    // this.classList.remove("playing") this es una propiedad(key) del keys.foreach
-  }
-
-  const keys = [...document.querySelectorAll('.key')] // spread operator para convertir en array
-  // const keys = Array.from(document.querySelectorAll('.key')) // Hace lo mismo, convierte en array una nodelist de JS
-  keys.forEach(key => key.addEventListener('transitionend', removeTransition))
-
-  window.addEventListener("keydown", playSound)
-  // document.addEventListener("keydown", playSound)
+  })
 
 </script>
 
