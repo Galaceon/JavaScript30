@@ -90,11 +90,26 @@
       secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
       minHand.style.transform = `rotate(${minutesDegrees}deg)`;
       hoursHand.style.transform = `rotate(${hoursDegrees}deg)`;
+
+      
+      const degrees = secondHand.style.transform;
+      const degreesData = degrees.match(/rotate\(([-\d.]+)deg\)/);
+      const degreesInt = parseFloat(degreesData[1]);
+
+      if(seconds === 0) {
+        secondHand.style.transition = "none";
+        secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+        // Fuerza el reflow: el navegador aplica el cambio anterior antes de seguir
+        secondHand.offsetHeight;
+
+        // Vuelve a activar la transicion
+        secondHand.style.transition = "all 0.1s cubic-bezier(.6, -0.28, .74, .05)";
+      }
+      
     }
 
     setInterval(setDate, 1000);
-
-
   </script>
 </body>
 </html>
