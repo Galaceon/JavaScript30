@@ -5,7 +5,7 @@
   <title>Array Cardio 💪</title>
   <link rel="icon" href="https://fav.farm/🔥" />
 </head>
-<body>
+<body bgcolor=3d3d3d>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
   <script>
     // Get your shorts on - this is an array workout!
@@ -38,28 +38,91 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    // 1. Filtra la lista de inventores para aquellos que nacieran en los 1500
+    const fifteen = inventors.filter( inventor => {
+      return inventor.year < 1600 && inventor.year >= 1500;
+    })
+    console.table(fifteen)
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    // 2. Consigue un array con nombre y apellido de los inventores
+    const fullNames = inventors.map(inventor => `Nombre: ${inventor.first} - Apellido: ${inventor.last}`)
+    console.table(fullNames);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    // 3. Ordenada los inventores por fecha de nacimiento, del mayor al menos
+
+    const ordered = inventors.sort((firstPerson, secondPerson) => firstPerson.year > secondPerson.year ? 1 : -1);
+
+    console.table(ordered);
+    // const ordered = inventors.sort(function(firstPerson, secondPerson) {
+    //   if(firstPerson.year > secondPerson.year) {
+    //     return 1;
+    //   } else {
+    //     return -1;
+    //   }
+    // })
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    // 4. Cuantos años han vivido todos los inventores todos juntos?
+    const totalYears = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year);
+    }, 0)
+
+    console.log(totalYears);
 
     // 5. Sort the inventors by years lived
+    // 5. Ordena los inventores por años vividos
+    const oldest = inventors.sort(function(firstPerson, secondPerson) {
+      const firstGuy = firstPerson.passed - firstPerson.year;
+      const secondGuy = secondPerson.passed - secondPerson.year;
+      return firstGuy > secondGuy ? -1 : 1;
+    })
+    console.table(oldest);
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
+    // 6. Crea una lista de Boulevards en Paris que contengan 'de' en cualquier nombre
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+
+    // En consola del link escribes el codigo y despues escribes 'de' en la misma consola
+
+    // const category = document.querySelector('.mw-category');
+    // const links = [...category.querySelectorAll('a')];
+
+    // const de = links
+    //             .map(link => link.textContent)
+    //             .filter(streetName => streetName.includes('de'))
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    // Ordenada las personas alfabeticamente por su apellido
+
+    const sortedPeople = people.sort((a, b) => {
+      const [aLast] = a.split(', ');
+      const [bLast] = b.split(', ');
+      return aLast > bLast ? 1 : -1;
+      // return aLast.localeCompare(bLast);
+    });
+
+    console.log(sortedPeople);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
+    // Suma las instancias de cada uno de los siguiente
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const transportation = data.reduce(function(obj, item) {
+      if(!obj[item]) {
+        obj[item] = 0;
+      }
+      obj[item]++;
+      return obj;
+    }, {})
 
   </script>
 </body>
