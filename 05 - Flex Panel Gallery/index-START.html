@@ -8,6 +8,17 @@
 </head>
 <body>
   <style>
+
+/* Explicacion:
+
+1. Los paneles estan ocultando parte de su contenido usando transform: translateY nada mas abrir la página.
+2. Cuando se abre un panel, se le añade la clase 'open', lo que hace
+3. que el panel crezca (flex: 5) y aumente su tamaño de fuente.
+4. Al finalizar la transición, se añade la clase 'open-active', que muestra el contenido oculto al moverlo a su posición original (translateY(0)).
+5. Al cerrar el panel, se eliminan las clases 'open' y 'open-active', ocultando nuevamente el contenido.
+
+*/
+
     html {
       box-sizing: border-box;
       background: #ffc600;
@@ -53,6 +64,7 @@
       justify-content: space-around;
     }
 
+    /* Background images for each panel */
     .panel1 { background-image:url(images/hawaii.jpg); }
     .panel2 { background-image:url(images/tree.jpg); }
     .panel3 { background-image:url(images/forest.jpg); }
@@ -60,6 +72,7 @@
     .panel5 { background-image:url(images/nightSky.jpg); }
 
     /* Flex Children */
+    /* Asegura que los elementos dentro de cada panel ocupen todo el espacio disponible */
     .panel > * {
       margin: 0;
       width: 100%;
@@ -71,9 +84,14 @@
       justify-content: center;
     }
 
+
+    /* Mueve los elementos fuera de la vista inicialmente */
     .panel > *:first-child { transform: translateY(-100%); }
+    /* Muestra el primer elemento al abrir el panel */
     .panel.open-active > *:first-child { transform: translateY(0); }
+    /* Mueve el último elemento fuera de la vista inicialmente */
     .panel > *:last-child { transform: translateY(100%); }
+    /* Muestra el último elemento al abrir el panel */
     .panel.open-active > *:last-child { transform: translateY(0); }
 
     .panel p {
@@ -124,12 +142,15 @@
   </div>
 
   <script>
+    // selecciona todos los elementos con la clase 'panel'
     const panels = document.querySelectorAll('.panel');
 
+    // función para alternar la clase 'open' al hacer clic
     function toggleOpen() {
       this.classList.toggle('open');
     }
 
+    // función para alternar la clase 'open-active' al finalizar la transición
     function toggleActive(e) {
       if(e.propertyName.includes('flex')) {
         this.classList.toggle('open-active')

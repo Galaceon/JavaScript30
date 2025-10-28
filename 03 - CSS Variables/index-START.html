@@ -61,21 +61,36 @@
     input {
       width: 100px;
     }
+
+/*
+
+Explicación:
+
+1. Se obtienen los inputs dentro del contenedor con clase 'controls'.
+2. Se define la función `handleUpdate` que actualiza las variables CSS basándose en los valores de los inputs.
+3. Se agregan event listeners a cada input para detectar cambios y movimientos.
+4. Se define la función `restartInputs` para reiniciar los valores de los inputs a sus valores iniciales.
+5. Se reinician los valores de los inputs al cargar la página.
+
+*/
   </style>
 
 
   <script>
+    // obtiene todos los inputs dentro del contenedor con clase 'controls'
     const inputs = document.querySelectorAll('.controls input');
 
+    // función para actualizar las variables CSS
     function handleUpdate() {
       const suffix = this.dataset.sizing || '';
       document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
     }
 
+    // agrega event listeners a cada input para detectar cambios y movimientos
     inputs.forEach(input => input.addEventListener('change', handleUpdate));
     inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
     
-
+    // función para reiniciar los valores de los inputs a sus valores iniciales
     function restartInputs(input) {
       if (input.type === "range") {
         input.value = 10;
@@ -83,7 +98,7 @@
         input.value = "#1155aa";
       }
     }
-
+    // reinicia los valores de los inputs al cargar la página
     document.addEventListener('DOMContentLoaded', () => {
         inputs.forEach(restartInputs);
     });
